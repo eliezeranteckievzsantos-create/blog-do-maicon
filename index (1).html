@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Gradiente Criativo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gradient-primary: linear-gradient(135deg, #0066ff 0%, #7c3aed 50%, #ec4899 100%);
+            --gradient-radial: radial-gradient(circle at 30% 50%, #06b6d4 0%, #7c3aed 100%);
+            --gradient-hover: linear-gradient(to right, #f97316 0%, #ec4899 100%);
+            --gradient-text: linear-gradient(90deg, #0066ff, #7c3aed, #ec4899);
+            --gradient-overlay: linear-gradient(180deg, rgba(0, 102, 255, 0.1) 0%, rgba(124, 58, 237, 0.05) 100%);
+            --gradient-button: linear-gradient(135deg, #0066ff 0%, #7c3aed 100%);
+            --primary: #0066ff;
+            --font-display: 'Poppins', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: #0a0a0a;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-display);
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+        }
+
+        h2 {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+        }
+
+        h3 {
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
+        }
+
+        .gradient-primary {
+            background: var(--gradient-primary);
+        }
+
+        .gradient-radial {
+            background: var(--gradient-radial);
+        }
+
+        .gradient-text {
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-gradient {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.65rem;
+            font-weight: 600;
+            color: white;
+            background: var(--gradient-button);
+            border: none;
+            cursor: pointer;
+            transition: all 300ms ease-out;
+            box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
+            font-size: 1rem;
+        }
+
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 102, 255, 0.4);
+        }
+
+        .btn-gradient:active {
+            transform: scale(0.98);
+        }
+
+        .link-gradient {
+            position: relative;
+            display: inline-block;
+            color: var(--primary);
+            font-weight: 500;
+            transition: color 300ms ease-out;
+            text-decoration: none;
+        }
+
+        .link-gradient::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-hover);
+            transition: width 300ms ease-out;
+        }
+
+        .link-gradient:hover::after {
+            width: 100%;
+        }
+
+        .blog-card {
+            border-radius: 0.65rem;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 300ms ease-out;
+            background: #f8f9fa;
+            border: 1px solid #e5e5e5;
+        }
+
+        .blog-card:hover {
+            box-shadow: 0 12px 24px rgba(0, 102, 255, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .divider-gradient {
+            height: 4px;
+            margin: 2rem 0;
+            background: var(--gradient-primary);
+            opacity: 0.3;
+            border-radius: 2px;
+            border: none;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background-color: #1a1a1a;
+            border-bottom: 1px solid #333;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.125rem;
+        }
+
+        .logo-text {
+            font-weight: bold;
+            font-size: 1.125rem;
+            color: #ffffff;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .search-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            padding: 4rem 1rem;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #0066ff 0%, #7c3aed 50%, #ec4899 100%);
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, white, transparent, white);
+            opacity: 0.9;
+            z-index: 1;
+        }
+
+        .hero-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .hero h1 {
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #b0b0b0;
+            margin-bottom: 2rem;
+        }
+
+        .search-container {
+            display: flex;
+            gap: 0.5rem;
+            max-width: 28rem;
+            margin: 0 auto;
+        }
+
+        .search-container input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border-radius: 0.65rem;
+            border: 1px solid #444;
+            font-size: 1rem;
+            background-color: #2a2a2a;
+            color: #e0e0e0;
+        }
+
+        .search-container input:focus {
+            outline: none;
+            ring: 2px;
+            ring-color: #0066ff;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 3rem 1rem;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 1024px) {
+            .content-grid {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+
+        .posts-section h2 {
+            margin-bottom: 2rem;
+            color: #ffffff;
+        }
+
+        .posts-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        @media (min-width: 768px) {
+            .posts-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .post-card {
+            border-radius: 0.65rem;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+            transition: all 300ms ease-out;
+            background: #1a1a1a;
+            border: 1px solid #333;
+        }
+
+        .post-card:hover {
+            box-shadow: 0 12px 24px rgba(0, 102, 255, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .post-image {
+            width: 100%;
+            height: 12rem;
+            object-fit: cover;
+            display: block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .post-card:hover .post-image {
+            transform: scale(1.1);
+            transition: transform 300ms ease-out;
+        }
+
+        .post-content {
+            padding: 1.5rem;
+        }
+
+        .post-category {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background-color: #2a2a2a;
+            color: #0066ff;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 9999px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 0.5rem;
+        }
+
+        .post-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            transition: color 300ms ease-out;
+        }
+
+        .post-card:hover .post-title {
+            color: #0066ff;
+        }
+
+        .post-excerpt {
+            color: #a0a0a0;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #707070;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #333;
+        }
+
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.875rem;
+            color: #a0a0a0;
+        }
+
+        .post-action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: color 300ms ease-out;
+        }
+
+        .post-action-btn:hover {
+            color: #0066ff;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: none;
+        }
+
+        @media (min-width: 1024px) {
+            .sidebar {
+                display: block;
+            }
+        }
+
+        .sidebar-card {
+            border-radius: 0.65rem;
+            padding: 1.5rem;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .sidebar-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .category-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            background-color: #2a2a2a;
+            color: #e0e0e0;
+            border: none;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 300ms ease-out;
+        }
+
+        .category-btn:hover {
+            background-color: #0066ff;
+            color: white;
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .newsletter-form input {
+            padding: 0.5rem;
+            border-radius: 0.65rem;
+            border: 1px solid #444;
+            font-size: 0.875rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #e0e0e0;
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            ring: 2px;
+            ring-color: #0066ff;
+        }
+
+        .author-section {
+            text-align: center;
+        }
+
+        .author-avatar {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .author-section h4 {
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .author-section p {
+            font-size: 0.875rem;
+            color: #a0a0a0;
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+        }
+
+        .social-btn {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 0.5rem;
+            background-color: #2a2a2a;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 300ms ease-out;
+            color: #e0e0e0;
+        }
+
+        .social-btn:hover {
+            background-color: #0066ff;
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #000000;
+            color: white;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 3rem 1rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .footer-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .footer-section h4 {
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #909090;
+            text-decoration: none;
+            transition: color 300ms ease-out;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-divider {
+            height: 1px;
+            background-color: #444;
+            margin: 2rem 0;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            color: #707070;
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+            }
+
+            .header-container {
+                padding: 0.75rem;
+            }
+
+            .logo-text {
+                display: none;
+            }
+
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon gradient-primary">G</div>
+                <span class="logo-text">Gradiente</span>
+            </div>
+            <nav>
+                <a href="#" class="link-gradient">Início</a>
+                <a href="#posts" class="link-gradient">Posts</a>
+                <a href="#categorias" class="link-gradient">Categorias</a>
+                <a href="#sobre" class="link-gradient">Sobre</a>
+            </nav>
+            <button class="search-btn">🔍</button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="gradient-text animate-fade-in-up">
+                Explore o Mundo dos Gradientes Criativos
+            </h1>
+            <p>Aprenda técnicas avançadas de CSS, design responsivo e boas práticas modernas para criar interfaces incríveis.</p>
+            <div class="search-container">
+                <input type="text" placeholder="Buscar posts..." id="searchInput">
+                <button class="btn-gradient">🔍</button>
+            </div>
+        </div>
+        <div class="divider-gradient"></div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="content-grid">
+            <!-- Posts Section -->
+            <div class="posts-section">
+                <h2>Posts em Destaque</h2>
+                <div class="posts-grid" id="postsContainer">
+                    <!-- Posts serão inseridos aqui via JavaScript -->
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <!-- Categories -->
+                <div class="sidebar-card">
+                    <h3 id="categorias">Categorias</h3>
+                    <div class="categories" id="categoriesContainer">
+                        <!-- Categorias serão inseridas aqui -->
+                    </div>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="sidebar-card" style="background: var(--gradient-radial); color: white;">
+                    <h3>Newsletter</h3>
+                    <p style="margin-bottom: 1rem; font-size: 0.875rem;">Receba os melhores posts direto no seu email.</p>
+                    <form class="newsletter-form" onsubmit="handleSubscribe(event)">
+                        <input type="email" placeholder="seu@email.com" required style="color: #1a1a2e;">
+                        <button type="submit" class="btn-gradient">✉️ Inscrever</button>
+                    </form>
+                </div>
+
+                <!-- About Author -->
+                <div class="sidebar-card">
+                    <div class="author-section">
+                        <div class="author-avatar gradient-primary">G</div>
+                        <h4>Gradiente Criativo</h4>
+                        <p>Especialista em design web moderno, CSS avançado e criação de interfaces incríveis com gradientes.</p>
+                        <div class="social-links">
+                            <button class="social-btn">f</button>
+                            <button class="social-btn">𝕏</button>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                        <div class="logo-icon gradient-primary">G</div>
+                        <span>Gradiente</span>
+                    </div>
+                    <p style="font-size: 0.875rem; color: #aaa;">Explorando o mundo dos gradientes criativos e design web moderno.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Navegação</h4>
+                    <ul>
+                        <li><a href="#">Início</a></li>
+                        <li><a href="#posts">Posts</a></li>
+                        <li><a href="#categorias">Categorias</a></li>
+                        <li><a href="#sobre">Sobre</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Categorias</h4>
+                    <ul id="footerCategories">
+                        <!-- Categorias serão inseridas aqui -->
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Redes Sociais</h4>
+                    <div class="social-links">
+                        <button class="social-btn">f</button>
+                        <button class="social-btn">𝕏</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-divider"></div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Blog Gradiente Criativo. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Dados dos posts
+        const blogPosts = [
+            {
+                id: 1,
+                title: 'Dominando CSS Gradientes em 2024',
+                excerpt: 'Aprenda técnicas avançadas de gradientes lineares, radiais e múltiplos para criar interfaces modernas.',
+                category: 'CSS',
+                date: '15 de Junho, 2024',
+                readTime: '8 min',
+                featured: true,
+                likes: 342,
+                comments: 28,
+            },
+            {
+                id: 2,
+                title: 'Flexbox vs Grid: Quando Usar Cada Um',
+                excerpt: 'Um guia completo sobre quando usar Flexbox e quando usar CSS Grid para layouts responsivos.',
+                category: 'Layout',
+                date: '12 de Junho, 2024',
+                readTime: '6 min',
+                featured: true,
+                likes: 287,
+                comments: 19,
+            },
+            {
+                id: 3,
+                title: 'Tipografia Web Moderna',
+                excerpt: 'Escolha as fontes certas e crie hierarquias visuais que melhoram a legibilidade e o design.',
+                category: 'Design',
+                date: '10 de Junho, 2024',
+                readTime: '7 min',
+                likes: 156,
+                comments: 12,
+            },
+            {
+                id: 4,
+                title: 'Animações CSS Suaves e Performáticas',
+                excerpt: 'Crie animações que não prejudicam a performance usando transform e opacity.',
+                category: 'Performance',
+                date: '8 de Junho, 2024',
+                readTime: '9 min',
+                likes: 423,
+                comments: 35,
+            },
+            {
+                id: 5,
+                title: 'Responsividade Mobile-First',
+                excerpt: 'Estratégias e boas práticas para criar sites que funcionam perfeitamente em todos os dispositivos.',
+                category: 'Responsividade',
+                date: '5 de Junho, 2024',
+                readTime: '10 min',
+                likes: 512,
+                comments: 42,
+            },
+            {
+                id: 6,
+                title: 'Acessibilidade Web: Um Guia Prático',
+                excerpt: 'Torne seu site acessível para todos com ARIA, semântica HTML e boas práticas.',
+                category: 'Acessibilidade',
+                date: '2 de Junho, 2024',
+                readTime: '11 min',
+                likes: 298,
+                comments: 24,
+            },
+        ];
+
+        const categories = ['CSS', 'Layout', 'Design', 'Performance', 'Responsividade', 'Acessibilidade'];
+
+        // Renderizar posts
+        function renderPosts(posts = blogPosts) {
+            const container = document.getElementById('postsContainer');
+            container.innerHTML = posts.map(post => `
+                <div class="post-card">
+                    <div class="post-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+                        ${post.category}
+                    </div>
+                    <div class="post-content">
+                        <span class="post-category">${post.category}</span>
+                        <h3 class="post-title">${post.title}</h3>
+                        <p class="post-excerpt">${post.excerpt}</p>
+                        <div class="post-meta">
+                            <span>${post.date}</span>
+                            <span>${post.readTime}</span>
+                        </div>
+                        <div class="post-actions">
+                            <div>
+                                <button class="post-action-btn">❤️ ${post.likes}</button>
+                                <button class="post-action-btn">💬 ${post.comments}</button>
+                            </div>
+                            <button class="post-action-btn">📤</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Renderizar categorias
+        function renderCategories() {
+            const container = document.getElementById('categoriesContainer');
+            const footerContainer = document.getElementById('footerCategories');
+            
+            const html = categories.map(cat => `<button class="category-btn" onclick="filterByCategory('${cat}')">${cat}</button>`).join('');
+            const footerHtml = categories.slice(0, 4).map(cat => `<li><a href="#" onclick="filterByCategory('${cat}'); return false;">${cat}</a></li>`).join('');
+            
+            container.innerHTML = html;
+            footerContainer.innerHTML = footerHtml;
+        }
+
+        // Filtrar por categoria
+        function filterByCategory(category) {
+            const filtered = blogPosts.filter(post => post.category === category);
+            renderPosts(filtered);
+        }
+
+        // Buscar posts
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const filtered = blogPosts.filter(post =>
+                post.title.toLowerCase().includes(query) ||
+                post.excerpt.toLowerCase().includes(query)
+            );
+            renderPosts(filtered);
+        });
+
+        // Newsletter
+        function handleSubscribe(e) {
+            e.preventDefault();
+            alert('✓ Inscrição realizada com sucesso!');
+            e.target.reset();
+        }
+
+        // Inicializar
+        renderPosts();
+        renderCategories();
+    </script>
+</body>
+</html>
